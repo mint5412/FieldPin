@@ -31,7 +31,7 @@ public class SearchPin implements Listener{
         Objective objective = board.getObjective("pin");
 
         if (objective == null) {
-            objective = board.registerNewObjective("pin", Criteria.DUMMY, "chase");
+            objective = board.registerNewObjective("pin", Criteria.DUMMY, "Track");
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         }
 
