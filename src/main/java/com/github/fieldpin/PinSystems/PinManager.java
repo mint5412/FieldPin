@@ -43,7 +43,7 @@ public class PinManager {
         create(pinLoc);
 
         player.sendMessage(pinLoc.getX()+", "+pinLoc.getY()+", "+ pinLoc.getZ());
-        player.sendMessage("にピンを設置しました");
+        player.sendMessage("Field Pin is placed there.");
     }
     public void create(Location pinLoc) {
         setPinLocation(pinLoc);
