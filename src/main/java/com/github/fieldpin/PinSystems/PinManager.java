@@ -14,7 +14,6 @@ import java.util.*;
 public class PinManager {
 
     private final World world;
-    private final String worldName;
     private Location pinLocation;
     private Color pinColor;
     private final String configPath;
@@ -30,8 +29,7 @@ public class PinManager {
         this.pinConfig = new PinConfig();
         this.playerConfig = new PlayerConfig(player);
         this.world = world;
-        this.worldName = world.getName();
-        this.configPath = player.getUniqueId() + worldName;
+        this.configPath = player.getUniqueId() + world.getName();
         this.pinColor = getColor();
 
         this.pinLocation = (Location) this.pinConfig.get(getConfigPath());
@@ -122,7 +120,6 @@ public class PinManager {
         stand.setSmall(true);
     }
     public OfflinePlayer getPinOwner() {return this.pinOwner;}
-    public String getWorldName() {return this.worldName;}
     public Location getPinLocation() {return this.pinLocation;}
     public void setPinLocation(Location pinLocation) {
         this.pinLocation = pinLocation;
