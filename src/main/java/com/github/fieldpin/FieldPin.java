@@ -55,8 +55,7 @@ public final class FieldPin extends JavaPlugin {
             OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(key.replace(world.getName(), "")));
             new PinManager(player, world).SpawnPinParticle();
         }
-        for (Player player : Bukkit.getOnlinePlayers())
-        {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             Bukkit.getServer().getPluginManager().callEvent(new PlayerJoinEvent(player, ""));
         }
     }

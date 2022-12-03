@@ -46,7 +46,7 @@ public class PinManager {
         this.playerConfig.setConfig("Pins", worlds);
     }
 
-    public void update(Location pinLoc){
+    public void update(Location pinLoc) {
         // if Player is offline, update cancel
         if (getPinOwner().getPlayer() == null) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error: " + ChatColor.LIGHT_PURPLE
@@ -69,27 +69,26 @@ public class PinManager {
         getPinOwner().getPlayer().sendMessage(pinLoc.getX()+", "+pinLoc.getY()+", "+ pinLoc.getZ());
         getPinOwner().getPlayer().sendMessage("にピンを設置しました");
     }
-    public void remove(){
+    public void remove() {
         // remove Pin
         ArmorStand stand = getPinMarker();
         if (stand != null) stand.remove();
         setPinLocation(null);
     }
-    public void SpawnPinParticle(){
+    public void SpawnPinParticle() {
         if (getPinLocation() == null) return;
         int range = 256 - getPinLocation().getBlockY();
         new BukkitRunnable(){
 
             @Override
             public void run() {
-                if (getPinLocation() == null){
+                if (getPinLocation() == null) {
                     cancel();
                     return;
                 }
                 Color color = getColor();
                 Particle.DustOptions options = new Particle.DustOptions(color, 4.0f);
-                for (int add = 0; add <= range; ++add)
-                {
+                for (int add = 0; add <= range; ++add) {
                     world.spawnParticle(Particle.REDSTONE, getPinLocation().clone().add(0, add,0), 1, options);
                 }
             }

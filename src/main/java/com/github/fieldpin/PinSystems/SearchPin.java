@@ -76,8 +76,7 @@ public class SearchPin implements Listener {
         String arrow = getDirectingArrow(player, subtract);
 
         // update scoreboard
-        for (String entry : board.getEntries())
-        {
+        for (String entry : board.getEntries()) {
             if (objective.getScore(entry).getScore() == -1) board.resetScores(entry);
         }
 

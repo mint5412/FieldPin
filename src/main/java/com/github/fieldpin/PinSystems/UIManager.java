@@ -12,13 +12,13 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UIManager extends PinManager{
+public class UIManager extends PinManager {
 
     public UIManager(Player player) {
         super(player, player.getWorld());
     }
 
-    public void changeColor(){
+    public void changeColor() {
 
         Player player = getPinOwner().getPlayer();
         assert player != null;
@@ -41,8 +41,7 @@ public class UIManager extends PinManager{
         items.add(new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
 
         int ind = 10;
-        for (ItemStack item : items)
-        {
+        for (ItemStack item : items) {
             meta.setDisplayName(item.getType().name().replace("_STAINED_GLASS_PANE", ""));
             item.setItemMeta(meta);
             inventory.setItem(ind, item);
@@ -53,15 +52,14 @@ public class UIManager extends PinManager{
         player.openInventory(inventory);
 
     }
-    public void setTarget(){
+    public void setTarget() {
 
         Player player = getPinOwner().getPlayer();
         assert player != null;
 
         Inventory inv = Bukkit.createInventory(player, 27, ChatColor.LIGHT_PURPLE+"Select Target");
 
-        for (OfflinePlayer offlinePlayer : Bukkit.getServer().getOfflinePlayers())
-        {
+        for (OfflinePlayer offlinePlayer : Bukkit.getServer().getOfflinePlayers()) {
             ItemStack Head = new ItemStack(Material.PLAYER_HEAD);
 
             SkullMeta meta = (SkullMeta) Head.getItemMeta();

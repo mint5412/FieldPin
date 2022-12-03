@@ -11,8 +11,7 @@ import org.bukkit.scoreboard.ScoreboardManager;
 
 public class PlayerJoin implements Listener {
     @EventHandler
-    public void PlayerJoin(PlayerJoinEvent e)
-    {
+    public void PlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         // setting player config
         new PlayerConfig(player).setConfig("name", player.getName());

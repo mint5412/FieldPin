@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 public class RegisterChaseTarget implements Listener {
     @EventHandler
-    public void ClickInventoryEvent(InventoryClickEvent e){
+    public void ClickInventoryEvent(InventoryClickEvent e) {
         Inventory clicked = e.getClickedInventory();
         if (clicked == null) return;
         ItemStack clickedItem = clicked.getItem(e.getSlot());
@@ -31,8 +31,7 @@ public class RegisterChaseTarget implements Listener {
         String path = "target";
         PlayerConfig config = new PlayerConfig(player);
 
-        if (meta instanceof SkullMeta && ((SkullMeta) meta).getOwningPlayer() != null)
-        {
+        if (meta instanceof SkullMeta && ((SkullMeta) meta).getOwningPlayer() != null) {
             OfflinePlayer offlinePlayer = ((SkullMeta) meta).getOwningPlayer();
             config.setConfig(path, offlinePlayer.getUniqueId().toString());
             player.sendMessage("Chase Target: " + offlinePlayer.getName());

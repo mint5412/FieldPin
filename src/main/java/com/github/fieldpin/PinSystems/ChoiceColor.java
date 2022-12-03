@@ -10,11 +10,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Objects;
-
 public class ChoiceColor implements Listener {
     @EventHandler
-    public void ClickInventoryEvent(InventoryClickEvent e){
+    public void ClickInventoryEvent(InventoryClickEvent e) {
         Inventory clicked = e.getClickedInventory();
         if (clicked == null) return;
         ItemStack clickedItem = clicked.getItem(e.getSlot());
@@ -24,10 +22,11 @@ public class ChoiceColor implements Listener {
         String title = e.getView().getTitle();
         if (!title.equalsIgnoreCase(ChatColor.LIGHT_PURPLE+"Choice Color")) return;
         e.setCancelled(true);
+
         PlayerConfig playerConfig = new PlayerConfig(player);
+
         Color color =
-        switch (clickedItem.getType())
-        {
+        switch (clickedItem.getType()) {
             case RED_STAINED_GLASS_PANE -> Color.RED;
             case BLUE_STAINED_GLASS_PANE -> Color.BLUE;
             case GREEN_STAINED_GLASS_PANE -> Color.GREEN;

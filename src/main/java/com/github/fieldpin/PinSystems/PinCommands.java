@@ -31,7 +31,7 @@ public class PinCommands implements CommandExecutor, TabCompleter {
             // onPlayer
             pinLoc = player.getLocation();
 
-        }else if (args.length == 1){
+        } else if (args.length == 1) {
             switch (args[0]) {
                 case "remove":
                     pin.remove();
@@ -46,53 +46,43 @@ public class PinCommands implements CommandExecutor, TabCompleter {
                 default:
                     return false;
             }
-        }else if (args.length == 3)
-        {
+        } else if (args.length == 3) {
             // supports relative coordinates
             // X
             double x;
-            if (conv.isConvertDouble(args[0]))
-            {
+            if (conv.isConvertDouble(args[0])) {
                 x = Double.parseDouble(args[0]);
-            }else if (args[0].equals("~"))
-            {
+            } else if (args[0].equals("~")) {
                 x = player.getLocation().getX();
-            }else if (args[0].startsWith("~")
-                    && conv.isConvertDouble(args[0].replace("~", "")))
-            {
+            } else if (args[0].startsWith("~")
+                    && conv.isConvertDouble(args[0].replace("~", ""))) {
                 x = player.getLocation().getX() + Double.parseDouble(args[0].replace("~", ""));
-            }else return false;
+            } else return false;
 
             // Y
             double y;
-            if (conv.isConvertDouble(args[1]))
-            {
+            if (conv.isConvertDouble(args[1])) {
                 y = Double.parseDouble(args[1]);
-            }else if (args[1].equals("~"))
-            {
+            } else if (args[1].equals("~")) {
                 y = player.getLocation().getY();
-            }else if (args[1].startsWith("~")
-                    && conv.isConvertDouble(args[1].replace("~", "")))
-            {
+            } else if (args[1].startsWith("~")
+                    && conv.isConvertDouble(args[1].replace("~", ""))) {
                 y = player.getLocation().getY() + Double.parseDouble(args[1].replace("~", ""));
-            }else return false;
+            } else return false;
 
             // Z
             double z;
-            if (conv.isConvertDouble(args[2]))
-            {
+            if (conv.isConvertDouble(args[2])) {
                 z = Double.parseDouble(args[2]);
-            }else if (args[2].equals("~"))
-            {
+            } else if (args[2].equals("~")) {
                 z = player.getLocation().getZ();
-            }else if (args[2].startsWith("~")
-                    && conv.isConvertDouble(args[2].replace("~", "")))
-            {
+            } else if (args[2].startsWith("~")
+                    && conv.isConvertDouble(args[2].replace("~", ""))) {
                 z = player.getLocation().getZ() + Double.parseDouble(args[2].replace("~", ""));
-            }else return false;
+            } else return false;
 
             pinLoc = new Location(player.getWorld(), x, y, z);
-        }else return false;
+        } else return false;
 
         new PinManager(player, player.getWorld()).update(pinLoc);
         return true;
@@ -111,8 +101,7 @@ public class PinCommands implements CommandExecutor, TabCompleter {
             loc = block.getLocation().clone();
         }
         List<String> list = new ArrayList<>();
-        switch (args.length)
-        {
+        switch (args.length) {
             case 1:
                 if (args[0] == null) return null;
                 break;
@@ -124,71 +113,54 @@ public class PinCommands implements CommandExecutor, TabCompleter {
                 break;
 
         }
-        if (args.length == 1)
-        {
-            if (args[0].length() == 0)
-            {
+        if (args.length == 1) {
+            if (args[0].length() == 0) {
                 list.addAll(Arrays.asList("color", "remove", "target"));
-                if (loc != null)
-                {
+                if (loc != null) {
                     list.addAll(Arrays.asList(loc.getBlockX() + "", loc.getBlockX() + " " + loc.getBlockY(), loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ()));
                 }
                 return list;
 
             } else {
-                if ("color".startsWith(args[0]))
-                {
+                if ("color".startsWith(args[0])) {
                     return Collections.singletonList("color");
-                } else if ("remove".startsWith(args[0]))
-                {
+                } else if ("remove".startsWith(args[0])) {
                     return Collections.singletonList("remove");
-                } else if ("target".startsWith(args[0]))
-                {
+                } else if ("target".startsWith(args[0])) {
                     return Collections.singletonList("target");
-                } else if (loc != null)
-                {
+                } else if (loc != null) {
                     if (conv.isConvertDouble(args[0])
                             || args[0].startsWith("~")
-                            || conv.isConvertDouble(args[0].replace("~", "")))
-                    {
+                            || conv.isConvertDouble(args[0].replace("~", ""))) {
                         list.addAll(Arrays.asList(args[0] + " " + loc.getBlockY(), args[0] + " " + loc.getBlockY() + " " + loc.getBlockZ()));
                         return list;
                     }
                 }
             }
-        } else if (args.length == 2 && loc != null)
-        {
+        } else if (args.length == 2 && loc != null) {
             if (args[0].startsWith("~")
                     || conv.isConvertDouble(args[0].replace("~", ""))
-                    || conv.isConvertDouble(args[0]))
-            {
-                if (args[1].length() == 0)
-                {
+                    || conv.isConvertDouble(args[0])) {
+                if (args[1].length() == 0) {
                     list.addAll(Arrays.asList(loc.getBlockY()+"", loc.getBlockY() + " " + loc.getBlockZ()));
                     return list;
-                } else
-                {
+                } else {
                     if (conv.isConvertDouble(args[1])
                             || args[1].startsWith("~")
-                            || conv.isConvertDouble(args[1].replace("~", "")))
-                    {
+                            || conv.isConvertDouble(args[1].replace("~", ""))) {
                         list.add(args[1] + " " + loc.getBlockZ());
                         return list;
                     }
                 }
-
             }
-        } else if (args.length == 3 && loc != null)
-        {
+        } else if (args.length == 3 && loc != null) {
             if ((args[0].startsWith("~")
                     || conv.isConvertDouble(args[0].replace("~", ""))
                     || conv.isConvertDouble(args[0]))
                     && (args[1].startsWith("~")
                     || conv.isConvertDouble(args[1].replace("~", ""))
-                    || conv.isConvertDouble(args[1])))
-            {
-                if (args[2].length() == 0)
-                {
+                    || conv.isConvertDouble(args[1]))) {
+                if (args[2].length() == 0) {
                     list.add(loc.getBlockZ() + "");
                     return list;
                 }
