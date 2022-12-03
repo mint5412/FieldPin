@@ -1,6 +1,7 @@
 # FieldPin
 This plugin adds Field Pins for each player on Minecraft v1.19.2
 
+
 # Commands
 /pin \<Location\>  
 ・Placed a Field Pin at the specified location.  
@@ -15,5 +16,5 @@ This plugin adds Field Pins for each player on Minecraft v1.19.2
 ・Select color by click on the UI opening after sending command.  
 
 /pin target  
-・Tracks players who have placed specific pins
+・Starts tracking the specified Field Pin.
 ・Select target by click on the UI opening after sending command.  
