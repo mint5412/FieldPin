@@ -1,6 +1,5 @@
 package com.github.fieldpin.PinSystems;
 
-import com.github.fieldpin.ConfigSystems.PinConfig;
 import com.github.fieldpin.ConfigSystems.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
