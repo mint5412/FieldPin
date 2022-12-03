@@ -135,43 +135,18 @@ public class SearchPin implements Listener {
 
     private String getDirectingArrow(Player player, Vector subtract) {
         Vector faceDirection = player.getFacing().getDirection();
-
-        String arrow = "";
-
-        switch (getDirection(subtract.subtract(faceDirection))[0]) {
-            case "N":
-                arrow = "↓";
-                break;
-
-            case "NE":
-                arrow = "↘";
-                break;
-
-            case "E":
-                arrow = "→";
-                break;
-
-            case "SE":
-                arrow = "↗";
-                break;
-
-            case "S":
-                arrow = "↑";
-                break;
-
-            case "SW":
-                arrow = "↙";
-                break;
-
-            case "W":
-                arrow = "←";
-                break;
-
-            case "NW":
-                arrow = "↖";
-                break;
-        }
-
-        return ChatColor.BLACK + "(" + ChatColor.AQUA + arrow + ChatColor.BLACK + ")";
+        return ChatColor.BLACK + "(" + ChatColor.AQUA +
+                switch (getDirection(subtract.subtract(faceDirection))[0]) {
+                    case "N" -> "↓";
+                    case "NE" -> "↘";
+                    case "E" -> "→";
+                    case "SE" -> "↗";
+                    case "S" -> "↑";
+                    case "SW" -> "↙";
+                    case "W" -> "←";
+                    case "NW" -> "↖";
+                    default -> "";
+                }
+                + ChatColor.BLACK + ")";
     }
 }
