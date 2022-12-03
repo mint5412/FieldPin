@@ -1,4 +1,4 @@
-package com.github.fieldpin.Systems;
+package com.github.fieldpin.ConfigSystems;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;

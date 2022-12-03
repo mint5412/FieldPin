@@ -1,6 +1,6 @@
-package com.github.fieldpin.Events;
+package com.github.fieldpin.PinSystems;
 
-import com.github.fieldpin.Systems.PlayerConfig;
+import com.github.fieldpin.ConfigSystems.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -51,7 +51,7 @@ public class SearchPin implements Listener {
 
         String worldName = player.getWorld().getName();
 
-        // whether is there FieldPin in the player's world
+        // whether is there Pin in the player's world
         Location targetLoc = (Location) targetConfig.get(worldName + "Pin");
         if (targetLoc == null) {
             player.sendMessage(targetPlayer.getName() + " is not setting Field Pin in this world.");

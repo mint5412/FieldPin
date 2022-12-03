@@ -1,4 +1,4 @@
-package com.github.fieldpin.Systems;
+package com.github.fieldpin.ConfigSystems;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -9,7 +9,7 @@ public class PinConfig extends YamlConfiguration {
 
     private final File file = new File("plugins/Configs/PinData.yml");
 
-    PinConfig () {
+    public PinConfig () {
         if (!file.exists())
         {
             try {
