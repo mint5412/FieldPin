@@ -63,7 +63,8 @@ public class PinManager {
 
             @Override
             public void run() {
-                if (!getPinLocation().equals(getPinMarker().getLocation())) {
+                if (getPinLocation() == null ||getPinMarker() == null
+                        || !getPinLocation().equals(getPinMarker().getLocation())) {
                     cancel();
                     return;
                 }
