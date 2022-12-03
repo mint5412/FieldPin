@@ -78,7 +78,7 @@ public class UIManager extends PinManager {
         }
 
 
-        // fill any blanks
+        // setting unselect target icon
         ItemStack item = new ItemStack(Material.MAGENTA_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
