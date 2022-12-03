@@ -2,3 +2,7 @@ name: FieldPin
 version: '${project.version}'
 main: com.github.fieldpin.FieldPin
 api-version: 1.19
+
+commands:
+  pin:
+    usage: /<command> or /<command> [X] [Y] [Z] or /<command> [remove] or /<command> [color]
