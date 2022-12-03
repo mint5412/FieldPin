@@ -44,6 +44,7 @@ public class ChoiceColor implements Listener {
 
         if (color == null) return;
         playerConfig.setConfig("color", color);
+        player.sendMessage("choice " + ChatColor.of(new java.awt.Color(color.getRed(), color.getGreen(), color.getBlue())) + "this color");
 
         player.closeInventory();
     }

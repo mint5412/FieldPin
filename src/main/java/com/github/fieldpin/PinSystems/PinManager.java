@@ -14,9 +14,7 @@ import java.util.*;
 public class PinManager {
 
     private final World world;
-    private Color pinColor;
     private final PinConfig pinConfig;
-    private final PlayerConfig playerConfig;
     private final OfflinePlayer pinOwner;
     private final JavaPlugin plugin;
 
@@ -25,9 +23,7 @@ public class PinManager {
         this.plugin = JavaPlugin.getPlugin(FieldPin.class);
         this.pinOwner = player;
         this.pinConfig = new PinConfig();
-        this.playerConfig = new PlayerConfig(player);
         this.world = world;
-        this.pinColor = getColor();
 
     }
 
@@ -73,7 +69,7 @@ public class PinManager {
                 }
                 Color color = getColor();
                 Particle.DustOptions options = new Particle.DustOptions(color, 4.0f);
-                for (int add = 0; add <= range; ++add) {
+                for (int add = 0; add <= range; add++) {
                     world.spawnParticle(Particle.REDSTONE, getPinLocation().clone().add(0, add,0), 1, options);
                 }
             }
@@ -108,15 +104,14 @@ public class PinManager {
     public Location getPinLocation() {return this.pinConfig.getLocation(this.pinOwner.getUniqueId() + "." + world.getName());}
     public void setPinLocation(Location pinLocation) {this.pinConfig.setConfig(this.pinOwner.getUniqueId() + "." + world.getName(), pinLocation);}
     public Color getColor() {
-        this.pinColor = (Color) this.playerConfig.get("color");
-        if (this.pinColor == null) {
+        Color color = new PlayerConfig(pinOwner).getColor("color");
+        if (color == null) {
             // setting default color
             setColor(Color.WHITE);
         }
-        return this.pinColor;
+        return color;
     }
     public void setColor(Color pinColor) {
-        this.pinColor = pinColor;
-        this.playerConfig.setConfig("color", pinColor);
+        new PlayerConfig(pinOwner).setConfig("color", pinColor);
     }
 }

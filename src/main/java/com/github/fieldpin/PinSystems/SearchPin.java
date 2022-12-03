@@ -1,5 +1,6 @@
 package com.github.fieldpin.PinSystems;
 
+import com.github.fieldpin.ConfigSystems.PinConfig;
 import com.github.fieldpin.ConfigSystems.PlayerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,10 +15,12 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
+import org.bukkit.util.io.BukkitObjectInputStream;
 
+import java.util.Map;
 import java.util.UUID;
 
-public class SearchPin implements Listener {
+public class SearchPin implements Listener{
     @EventHandler
     public void PlayerUpdate(PlayerMoveEvent e) {
         Player player = e.getPlayer();
@@ -47,19 +50,17 @@ public class SearchPin implements Listener {
         Location playerLoc = player.getLocation();
 
         OfflinePlayer targetPlayer = Bukkit.getServer().getOfflinePlayer(targetUID);
-        PlayerConfig targetConfig = new PlayerConfig(targetPlayer);
 
-        String worldName = player.getWorld().getName();
+        PinManager manager = new PinManager(targetPlayer, player.getWorld());
+        Location targetLoc = manager.getPinLocation();
 
         // whether is there Pin in the player's world
-        Location targetLoc = (Location) targetConfig.get(worldName + "Pin");
         if (targetLoc == null) {
             player.sendMessage(targetPlayer.getName() + " is not setting Field Pin in this world.");
             playerConfig.setConfig(path, null);
             objective.unregister();
             return;
         }
-
 
         Vector subtract = targetLoc.toVector().subtract(playerLoc.toVector()).normalize();
         int distance = (int) playerLoc.toVector().distance(targetLoc.toVector());
@@ -87,8 +88,6 @@ public class SearchPin implements Listener {
 
     private String[] getDirection(Vector subtract) {
 
-        subtract = subtract.normalize();
-
         String news, ud;
 
         double x = subtract.getX();
@@ -96,16 +95,16 @@ public class SearchPin implements Listener {
         double z = subtract.getZ();
 
         // up, down
-        if (y > 1) ud = "(UP)";
-        else if (y < -1) ud = "(DOWN)";
+        if (y > 0) ud = "(UP)";
+        else if (y < 0) ud = "(DOWN)";
         else ud = "(-)";
 
         // directions
-        final double absSin22 = Math.abs(Math.sin(22.5));
-        final double absCos22 = Math.abs(Math.cos(22.5));
+        final double absSin22 = Math.abs(Math.sin(22.5 * Math.PI / 180));
+        final double absCos22 = Math.abs(Math.cos(22.5 * Math.PI / 180));
 
-        boolean NoS = Math.abs(x) <= absSin22 && Math.abs(z) >= Math.abs(x*absCos22/absSin22);
-        boolean EoW = Math.abs(z) <= absSin22 && Math.abs(x) <= Math.abs(z*absCos22/absSin22);
+        boolean NoS = Math.abs(x) <= Math.abs(z*absSin22/absCos22);
+        boolean EoW = Math.abs(z) <= Math.abs(x*absSin22/absCos22);
 
         if (NoS) {
             // N or S
@@ -133,17 +132,19 @@ public class SearchPin implements Listener {
     }
 
     private String getDirectingArrow(Player player, Vector subtract) {
-        Vector faceDirection = player.getFacing().getDirection();
+        double offset = (player.getLocation().getYaw() + 180) * Math.PI / 180;
+        Vector rotated = new Vector( subtract.getX() * Math.cos(offset) + subtract.getZ() * Math.sin(offset), 0,
+                 subtract.getX() * Math.sin(offset) - subtract.getZ() * Math.cos(offset));
         return ChatColor.BLACK + "(" + ChatColor.AQUA +
-                switch (getDirection(subtract.subtract(faceDirection))[0]) {
+                switch (getDirection(rotated.normalize())[0]) {
                     case "N" -> "↓";
                     case "NE" -> "↘";
                     case "E" -> "→";
                     case "SE" -> "↗";
                     case "S" -> "↑";
-                    case "SW" -> "↙";
+                    case "SW" -> "↖";
                     case "W" -> "←";
-                    case "NW" -> "↖";
+                    case "NW" -> "↙";
                     default -> "";
                 }
                 + ChatColor.BLACK + ")";
