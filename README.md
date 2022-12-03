@@ -18,3 +18,4 @@ This plugin adds Field Pins for each player on Minecraft v1.19.2
 /pin target  
 ・Starts tracking the specified Field Pin.
 ・Select target by click on the UI opening after sending command.  
+　　
