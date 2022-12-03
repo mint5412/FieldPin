@@ -21,10 +21,9 @@ public class SearchPin implements Listener{
     @EventHandler
     public void PlayerUpdate(PlayerMoveEvent e) {
         Player player = e.getPlayer();
+        PlayerConfig playerConfig = new PlayerConfig(player);
 
         String path = "target";
-
-        PlayerConfig playerConfig = new PlayerConfig(player);
 
         // scoreboard setting
         Scoreboard board = player.getScoreboard();
