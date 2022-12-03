@@ -12,8 +12,8 @@ This plugin adds Field Pins for each player on Minecraft v1.19.2
 
 /pin color  
 ・Change the Field Pin's color.  
-・Choise color by click on the UI opening after sending command.  
+・Select color by click on the UI opening after sending command.  
 
 /pin target  
-・  
-・Choise target by click on the UI opening after sending command.  
+・Tracks players who have placed specific pins
+・Select target by click on the UI opening after sending command.  
