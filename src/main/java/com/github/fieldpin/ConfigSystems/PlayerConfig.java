@@ -1,9 +1,12 @@
 package com.github.fieldpin.ConfigSystems;
 
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class PlayerConfig extends YamlConfiguration {
@@ -20,13 +23,17 @@ public class PlayerConfig extends YamlConfiguration {
             }
         }
 
-        loadConfiguration(file);
+        try {
+            this.load(this.file);
+        } catch (InvalidConfigurationException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setConfig(String path, Object value) {
         this.set(path, value);
         try {
-            this.save(file);
+            this.save(this.file);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

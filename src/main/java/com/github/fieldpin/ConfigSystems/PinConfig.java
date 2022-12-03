@@ -1,5 +1,6 @@
 package com.github.fieldpin.ConfigSystems;
 
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -18,7 +19,11 @@ public class PinConfig extends YamlConfiguration {
             }
         }
 
-         loadConfiguration(file);
+        try {
+            this.load(this.file);
+        } catch (InvalidConfigurationException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setConfig(String path, Object value) {

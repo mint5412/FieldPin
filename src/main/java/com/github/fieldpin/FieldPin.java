@@ -10,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.Objects;
@@ -38,23 +39,28 @@ public final class FieldPin extends JavaPlugin {
     }
 
     public void Mkdir() {
+        // mkdir
         File file = new File("plugins/Configs");
         if (!file.exists()) file.mkdir();
         file = new File(file.getPath()+"/PlayerData");
         if (!file.exists()) file.mkdir();
     }
+
     public void SetUp() {
+        // set up states
         PinConfig pinConfig = new PinConfig();
-        for (String key : pinConfig.getKeys(false)) {
-            Location pinLocation = (Location) pinConfig.get(key);
+        for (String key : pinConfig.getKeys(true)) {
+            Location pinLocation = pinConfig.getLocation(key);
             if (pinLocation == null) continue;
 
             World world = pinLocation.getWorld();
             assert world != null;
 
-            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(key.replace(world.getName(), "")));
+            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(key.split("\\.")[0]));
             new PinManager(player, world).SpawnPinParticle();
         }
+
+        // call JoinEvent to online player
         for (Player player : Bukkit.getOnlinePlayers()) {
             Bukkit.getServer().getPluginManager().callEvent(new PlayerJoinEvent(player, ""));
         }

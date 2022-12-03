@@ -14,9 +14,7 @@ import java.util.*;
 public class PinManager {
 
     private final World world;
-    private Location pinLocation;
     private Color pinColor;
-    private final String configPath;
     private final PinConfig pinConfig;
     private final PlayerConfig playerConfig;
     private final OfflinePlayer pinOwner;
@@ -29,10 +27,8 @@ public class PinManager {
         this.pinConfig = new PinConfig();
         this.playerConfig = new PlayerConfig(player);
         this.world = world;
-        this.configPath = player.getUniqueId() + world.getName();
         this.pinColor = getColor();
 
-        this.pinLocation = (Location) this.pinConfig.get(getConfigPath());
     }
 
     public void update(Location pinLoc) {
@@ -71,7 +67,7 @@ public class PinManager {
 
             @Override
             public void run() {
-                if (getPinLocation() == null) {
+                if (!getPinLocation().equals(getPinMarker().getLocation())) {
                     cancel();
                     return;
                 }
@@ -84,21 +80,22 @@ public class PinManager {
         }.runTaskTimer(plugin,0, 20);
     }
     public ArmorStand getPinMarker() {
-        World world = this.pinLocation.getWorld();
+        if (getPinLocation() == null) return null;
+        World world = getPinLocation().getWorld();
         if (world == null) return null;
         for (ArmorStand entity : world.getEntitiesByClass(ArmorStand.class)) {
-            if (entity.getLocation().equals(this.pinLocation)
+            if (entity.getLocation().equals(getPinLocation())
                     && entity.getCustomName() != null
                     && entity.getCustomName().equals(pinOwner.getName())) return entity;
         }
         return null;
     }
     public void setPinMarker() {
-        if (getPinLocation().getWorld() == null) {
+        if (getPinLocation() == null || getPinLocation().getWorld() == null) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error: World is null");
             return;
         }
-        ArmorStand stand = (ArmorStand) getPinLocation().getWorld().spawnEntity(this.pinLocation, EntityType.ARMOR_STAND);
+        ArmorStand stand = (ArmorStand) getPinLocation().getWorld().spawnEntity(getPinLocation(), EntityType.ARMOR_STAND);
         stand.setInvisible(true);
         stand.setInvulnerable(true);
         stand.setCollidable(false);
@@ -108,14 +105,10 @@ public class PinManager {
         stand.setSmall(true);
     }
     public OfflinePlayer getPinOwner() {return this.pinOwner;}
-    public Location getPinLocation() {return this.pinLocation;}
-    public void setPinLocation(Location pinLocation) {
-        this.pinLocation = pinLocation;
-        this.pinConfig.setConfig(getConfigPath(), pinLocation);
-    }
-    public String getConfigPath() {return this.configPath;}
+    public Location getPinLocation() {return this.pinConfig.getLocation(this.pinOwner.getUniqueId() + "." + world.getName());}
+    public void setPinLocation(Location pinLocation) {this.pinConfig.setConfig(this.pinOwner.getUniqueId() + "." + world.getName(), pinLocation);}
     public Color getColor() {
-        this.pinColor = (Color) this.pinConfig.get("color");
+        this.pinColor = (Color) this.playerConfig.get("color");
         if (this.pinColor == null) {
             // setting default color
             setColor(Color.WHITE);

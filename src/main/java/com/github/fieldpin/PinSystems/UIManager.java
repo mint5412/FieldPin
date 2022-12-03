@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class UIManager extends PinManager {
         Player player = getPinOwner().getPlayer();
         assert player != null;
 
-        Inventory inventory = Bukkit.createInventory(player, 27, ChatColor.LIGHT_PURPLE + "now: " + ChatColor.of("#" + getColor().asRGB()) + getColor().toString());
+        Inventory inventory = Bukkit.createInventory(player, 27, ChatColor.LIGHT_PURPLE + "now: " +
+                ChatColor.of(new Color(getColor().getRed(), getColor().getGreen(), getColor().getBlue())) + "this color");
         ItemStack fill = new ItemStack(Material.BARRIER);
         ItemMeta meta = fill.getItemMeta();
         assert meta != null;
