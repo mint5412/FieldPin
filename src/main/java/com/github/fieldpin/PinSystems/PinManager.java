@@ -33,17 +33,6 @@ public class PinManager {
         this.pinColor = getColor();
 
         this.pinLocation = (Location) this.pinConfig.get(getConfigPath());
-
-        World[] worlds = (World[]) this.playerConfig.get("Pins");
-        if (worlds != null) {
-            List<World> worldList = Arrays.asList(worlds);
-            if (!worldList.contains(world)) {
-                worldList.add(world);
-                worlds = worldList.toArray(new World[0]);
-            }
-        } else worlds = new World[]{world};
-
-        this.playerConfig.setConfig("Pins", worlds);
     }
 
     public void update(Location pinLoc) {
