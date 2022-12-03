@@ -14,6 +14,7 @@ public class FillInventory {
     private void Fill(Inventory inv, ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
+
         meta.setDisplayName(ChatColor.LIGHT_PURPLE+"No Item");
         item.setItemMeta(meta);
 

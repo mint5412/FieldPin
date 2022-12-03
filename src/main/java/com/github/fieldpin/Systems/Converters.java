@@ -2,6 +2,7 @@ package com.github.fieldpin.Systems;
 
 public class Converters {
     public boolean isConvertDouble(String num) {
+
         try {
             Double.parseDouble(num);
             return true;

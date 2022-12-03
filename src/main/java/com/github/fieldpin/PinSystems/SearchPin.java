@@ -34,7 +34,6 @@ public class SearchPin implements Listener{
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         }
 
-        // target missing
         Object uid = playerConfig.get(path);
         if (uid == null) {
             objective.unregister();
@@ -50,7 +49,6 @@ public class SearchPin implements Listener{
         PinManager manager = new PinManager(targetPlayer, player.getWorld());
         Location targetLoc = manager.getPinLocation();
 
-        // whether is there Pin in the player's world
         if (targetLoc == null) {
             player.sendMessage(targetPlayer.getName() + " is not setting Field Pin in this world.");
             playerConfig.setConfig(path, null);
@@ -61,7 +59,6 @@ public class SearchPin implements Listener{
         Vector subtract = targetLoc.toVector().subtract(playerLoc.toVector()).normalize();
         int distance = (int) playerLoc.toVector().distance(targetLoc.toVector());
 
-        // reached goal point
         if (distance == 0) {
             player.sendMessage("you reached targeting Field Pin");
             playerConfig.setConfig(path, null);
@@ -72,7 +69,6 @@ public class SearchPin implements Listener{
         String[] direction = getDirection(subtract);
         String arrow = getDirectingArrow(player, subtract);
 
-        // update scoreboard
         for (String entry : board.getEntries()) {
             if (objective.getScore(entry).getScore() == -1) board.resetScores(entry);
         }
@@ -95,7 +91,7 @@ public class SearchPin implements Listener{
         else if (y < 0) ud = "(DOWN)";
         else ud = "(-)";
 
-        // directions
+        // 90 / 4 = 22.5
         final double absSin22 = Math.abs(Math.sin(22.5 * Math.PI / 180));
         final double absCos22 = Math.abs(Math.cos(22.5 * Math.PI / 180));
 
@@ -128,9 +124,13 @@ public class SearchPin implements Listener{
     }
 
     private String getDirectingArrow(Player player, Vector subtract) {
+
         double offset = (player.getLocation().getYaw() + 180) * Math.PI / 180;
+
+        // Rotate the pin location by the offset with the player as the center
         Vector rotated = new Vector( subtract.getX() * Math.cos(offset) + subtract.getZ() * Math.sin(offset), 0,
                  subtract.getX() * Math.sin(offset) - subtract.getZ() * Math.cos(offset));
+
         return ChatColor.BLACK + "(" + ChatColor.AQUA +
                 switch (getDirection(rotated.normalize())[0]) {
                     case "N" -> "↓";

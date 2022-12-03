@@ -6,6 +6,7 @@ import com.github.fieldpin.FieldPin;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -28,27 +29,26 @@ public class PinManager {
     }
 
     public void update(Location pinLoc) {
-        // if Player is offline, update cancel
-        if (getPinOwner().getPlayer() == null) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Error: " + ChatColor.LIGHT_PURPLE
-                    + getPinOwner().getName() + ChatColor.RED + " is Offline");
-            return;
-        }
+
+        Player player = getPinOwner().getPlayer();
+        assert player != null;
 
         pinLoc = pinLoc.getBlock().getLocation().add(0.5,0,0.5);
 
         // already exist at same point
         if (Objects.equals(getPinLocation(), pinLoc)) return;
 
-        //既存のピンを削除
         remove();
-        //新たなピンを作成
+
+        create(pinLoc);
+
+        player.sendMessage(pinLoc.getX()+", "+pinLoc.getY()+", "+ pinLoc.getZ());
+        player.sendMessage("にピンを設置しました");
+    }
+    public void create(Location pinLoc) {
         setPinLocation(pinLoc);
         setPinMarker();
         SpawnPinParticle();
-
-        getPinOwner().getPlayer().sendMessage(pinLoc.getX()+", "+pinLoc.getY()+", "+ pinLoc.getZ());
-        getPinOwner().getPlayer().sendMessage("にピンを設置しました");
     }
     public void remove() {
         // remove Pin

@@ -10,7 +10,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.Objects;
@@ -23,7 +22,7 @@ public final class FieldPin extends JavaPlugin {
         // registerEventListener
         getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         getServer().getPluginManager().registerEvents(new SearchPin(), this);
-        getServer().getPluginManager().registerEvents(new ChoiceColor(), this);
+        getServer().getPluginManager().registerEvents(new SelectColor(), this);
         getServer().getPluginManager().registerEvents(new RegisterChaseTarget(), this);
 
         Objects.requireNonNull(getCommand("pin")).setExecutor(new PinCommands());
@@ -39,7 +38,6 @@ public final class FieldPin extends JavaPlugin {
     }
 
     public void Mkdir() {
-        // mkdir
         File file = new File("plugins/Configs");
         if (!file.exists()) file.mkdir();
         file = new File(file.getPath()+"/PlayerData");

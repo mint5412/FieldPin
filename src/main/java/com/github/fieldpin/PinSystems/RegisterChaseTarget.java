@@ -31,6 +31,7 @@ public class RegisterChaseTarget implements Listener {
         String path = "target";
         PlayerConfig config = new PlayerConfig(player);
 
+        // get player from target icon
         if (meta instanceof SkullMeta && ((SkullMeta) meta).getOwningPlayer() != null) {
             OfflinePlayer offlinePlayer = ((SkullMeta) meta).getOwningPlayer();
             config.setConfig(path, offlinePlayer.getUniqueId().toString());

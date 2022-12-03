@@ -1,10 +1,8 @@
 package com.github.fieldpin.PinSystems;
 
-import com.github.fieldpin.ConfigSystems.PinConfig;
 import com.github.fieldpin.ConfigSystems.PlayerConfig;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,9 +10,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class ChoiceColor implements Listener {
+public class SelectColor implements Listener {
     @EventHandler
     public void ClickInventoryEvent(InventoryClickEvent e) {
+
         Inventory clicked = e.getClickedInventory();
         if (clicked == null) return;
         ItemStack clickedItem = clicked.getItem(e.getSlot());

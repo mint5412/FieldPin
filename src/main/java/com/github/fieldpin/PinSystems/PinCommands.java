@@ -18,10 +18,8 @@ import java.util.List;
 public class PinCommands implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player)) return false;
+        if (!(sender instanceof Player player)) return false;
         if (!label.equals("pin")) return false;
-
-        Player player = (Player) sender;
 
         Location pinLoc;
         PinManager pin = new PinManager(player, player.getWorld());
@@ -92,8 +90,7 @@ public class PinCommands implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, Command command, @NotNull String alias, String[] args) {
         if (!command.getName().equals("pin")) return null;
-        if (!(sender instanceof Player)) return null;
-        Player player = (Player) sender;
+        if (!(sender instanceof Player player)) return null;
         Block block = player.getTargetBlockExact(10);
         Location loc = null;
         Converters conv = new Converters();

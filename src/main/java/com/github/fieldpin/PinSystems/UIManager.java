@@ -24,15 +24,19 @@ public class UIManager extends PinManager {
         Player player = getPinOwner().getPlayer();
         assert player != null;
 
+        // setting UI base
         Inventory inventory = Bukkit.createInventory(player, 27, ChatColor.LIGHT_PURPLE + "now: " +
                 ChatColor.of(new Color(getColor().getRed(), getColor().getGreen(), getColor().getBlue())) + "this color");
-        ItemStack fill = new ItemStack(Material.BARRIER);
-        ItemMeta meta = fill.getItemMeta();
+
+        // fill any blanks
+        ItemStack fillItem = new ItemStack(Material.BARRIER);
+        ItemMeta meta = fillItem.getItemMeta();
         assert meta != null;
         meta.setDisplayName("No Item");
-        fill.setItemMeta(meta);
-        new FillInventory(inventory, fill);
+        fillItem.setItemMeta(meta);
+        new FillInventory(inventory, fillItem);
 
+        // setting select icon for each color
         List<ItemStack> items = new ArrayList<>();
         items.add(new ItemStack(Material.RED_STAINED_GLASS_PANE));
         items.add(new ItemStack(Material.BLUE_STAINED_GLASS_PANE));
@@ -50,7 +54,6 @@ public class UIManager extends PinManager {
             ++ind;
         }
 
-
         player.openInventory(inventory);
 
     }
@@ -61,6 +64,7 @@ public class UIManager extends PinManager {
 
         Inventory inv = Bukkit.createInventory(player, 27, ChatColor.LIGHT_PURPLE+"Select Target");
 
+        // setting select icon for each player
         for (OfflinePlayer offlinePlayer : Bukkit.getServer().getOfflinePlayers()) {
             ItemStack Head = new ItemStack(Material.PLAYER_HEAD);
 
@@ -73,6 +77,8 @@ public class UIManager extends PinManager {
             inv.addItem(Head);
         }
 
+
+        // fill any blanks
         ItemStack item = new ItemStack(Material.MAGENTA_STAINED_GLASS_PANE);
         ItemMeta meta = item.getItemMeta();
         assert meta != null;
