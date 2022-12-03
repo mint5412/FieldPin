@@ -10,8 +10,7 @@ public class PinConfig extends YamlConfiguration {
     private final File file = new File("plugins/Configs/PinData.yml");
 
     public PinConfig () {
-        if (!file.exists())
-        {
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
